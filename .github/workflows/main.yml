@@ -17,14 +17,7 @@ jobs:
         uses: hashicorp/vault-action@v2
         with:
           token: ${{ secrets.VAULT_TOKEN }}
-          url: ${{ secrets.VAULT_URL }}
-
-      - name: Authenticate with Vault
-        id: login
-        uses: hashicorp/vault-action@v2
-        with:
-          method: token
-          token: ${{ secrets.VAULT_TOKEN }}
+          url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
 
       - name: Retrieve Secret
         run: |
