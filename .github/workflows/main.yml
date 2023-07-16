@@ -22,7 +22,7 @@ jobs:
       - name: Retrieve Secret
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          export DASHBOARD_UI=$(vault kv get -field=DASHBOARD_UI secret/prods)
+          export DASHBOARD_UI=$(vault kv get -field=DASHBOARD_UI -format=json secret/prods | jq -r '.data.DASHBOARD_UI')
           echo "DASHBOARD_UI=${DASHBOARD_UI}" > .env
 
       - name: Display .env File
