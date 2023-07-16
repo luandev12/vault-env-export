@@ -26,6 +26,5 @@ jobs:
 
       - name: Display .env File
         run: |
-          while IFS= read -r line; do
-            echo "$line"
-          done < .env
+          touch .env
+          echo "${{ toJson(steps.import-secrets.outputs) }}" >> .env
