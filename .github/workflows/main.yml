@@ -22,7 +22,8 @@ jobs:
       - name: Retrieve Secret
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          vault kv get -field=DASHBOARD_UI secret/prods > .env
+          export DASHBOARD_UI=$(vault kv get -field=DASHBOARD_UI secret/prods)
+          echo "DASHBOARD_UI=${DASHBOARD_UI}" > .env
            
       - uses: actions/upload-artifact@v3
         name: Upload Artifact
