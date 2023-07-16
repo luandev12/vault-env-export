@@ -5,3 +5,13 @@ jobs:
         steps:
           - name: Say Hello World
             run: echo Hello, world!
+          - name: Import Secrets
+            id: import-secrets
+            uses: hashicorp/vault-action@v2
+            with:
+             url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
+             token: hvs.pZGVD0LmRE1EWw8HPGFAhrYa
+             secrets: |
+               secret/data/ci/aws accessKey | AWS_ACCESS_KEY_ID ;
+               secret/data/ci/aws secretKey | AWS_SECRET_ACCESS_KEY ;
+               secret/data/ci npm_token
