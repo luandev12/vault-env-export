@@ -18,12 +18,11 @@ jobs:
         run: |
           response=$(curl -sSL --header "X-Vault-Token: hvs.BBSpQxhFT5NSQWwRkectS5KB" \
                --request GET \
-               https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods)
-          data=$(echo "$response" | jq -r '.data.data.DASHBOARD_UI')
-          echo "response=$data" >> $GITHUB_ENV
+               https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods | jq -r '.data.data.DASHBOARD_UI)
+          echo "data=$response" >> $GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: SecretsVariables
-          path: ${{ env.response }}
+          path: ${{ env.data }}
