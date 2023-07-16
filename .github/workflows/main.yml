@@ -22,8 +22,11 @@ jobs:
       - name: Retrieve Secret
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          export VAULT_TOKEN=$VAULT_TOKEN
-          abc=$(vault kv get -field=DASHBOARD_UI -format=json secret/prods | jq -r '.data.DASHBOARD_UI')
+          export VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}
+          export SECRET_PATH=secret/prods
+          export FIELD_NAME=DASHBOARD_UI
+          export SECRET_URL="$VAULT_ADDR/v1/$SECRET_PATH"
+          abc=$(curl -s --header "X-Vault-Token: $VAULT_TOKEN" $SECRET_URL | jq -r ".data.data.$FIELD_NAME")
           echo "abc=$abc" >> $GITHUB_ENV
 
       - name: Display Secret Value
