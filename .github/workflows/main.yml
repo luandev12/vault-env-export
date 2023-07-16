@@ -14,28 +14,26 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Vault CLI
+        id: import-secrets
         uses: hashicorp/vault-action@v2
         with:
           token: ${{ secrets.VAULT_TOKEN }}
           url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
-
+          secrets: |
+           secret/prods DASHBOARD_UI | DASHBOARD_UI
+           
       - name: Retrieve Secret
         run: |
-          export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          export VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}
-          export SECRET_PATH=secret/prods
-          export FIELD_NAME=DASHBOARD_UI
-          export SECRET_URL="$VAULT_ADDR/v1/$SECRET_PATH"
-          abc=$(curl -s --header "X-Vault-Token: $VAULT_TOKEN" $SECRET_URL | jq -r ".data.data.$FIELD_NAME")
-          echo "abc=$abc" >> $GITHUB_ENV
+          DASHBOARD_UI = "${{ steps.import-secrets.outputs.DASHBOARD_UI }}"
 
-      - name: Display Secret Value
+      - name: Step following Import Secrets
         run: |
-          echo "The secret value is ${{ env.abc }}"
-          
+          touch secrets.json
+          echo "${{ toJson(steps.import-secrets.outputs) }}" >> secrets.json
+                
       - uses: actions/upload-artifact@v3
         name: Upload Artifact
         with:
          name: SecretsVariables
-         path: "$abc"
+         path: "secrets.json"
  
