@@ -23,7 +23,7 @@ jobs:
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
           export VAULT_TOKEN=$VAULT_TOKEN
-          DASHBOARD_UI=$(curl -s --header "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/secret/data/prods | jq -r '.data.data.DASHBOARD_UI')
+          export DASHBOARD_UI=$(curl -s --header "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/secret/data/prods | jq -r '.data.data.DASHBOARD_UI')
           echo "The secret value is $DASHBOARD_UI"
           echo "DASHBOARD_UI=${DASHBOARD_UI}" > .env
            
