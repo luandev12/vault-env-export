@@ -20,7 +20,7 @@ jobs:
           token: ${{ secrets.VAULT_TOKEN }}
           url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
           secrets: |
-           secret/show/prods DASHBOARD_UI | DASHBOARD_UI
+           secret/data/prods DASHBOARD_UI | DASHBOARD_UI
            
       - name: Retrieve Secret
         run: |
