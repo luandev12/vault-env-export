@@ -16,12 +16,12 @@ jobs:
       - name: Set up Vault CLI
         uses: hashicorp/vault-action@v2
         with:
-          vault-token: hvs.pZGVD0LmRE1EWw8HPGFAhrYa
-          vault-url: "https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app"
+          vault-token: ${{ secrets.VAULT_TOKEN }}
+          vault-url: ${{ secrets.VAULT_URL }}
 
       - name: Retrieve Secret
         run: |
-          export VAULT_ADDR="https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app"
+          export VAULT_ADDR=${{ secrets.VAULT_URL }}
           vault kv get -field=DASHBOARD_UI secret/prods > .env
 
       - name: Display .env File
