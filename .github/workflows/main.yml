@@ -24,7 +24,8 @@ jobs:
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
           vault kv get -field=DASHBOARD_UI secret/prods > .env
-
+          echo "::set-output name=dashboard_ui::$DASHBOARD_UI"
+          
       - name: Display .env File
         run: |
           touch .env
