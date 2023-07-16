@@ -22,7 +22,9 @@ jobs:
       - name: Retrieve Secret
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          DASHBOARD_UI=$(vault kv get -field=DASHBOARD_UI secret/prods)
+          export VAULT_TOKEN=$VAULT_TOKEN
+          DASHBOARD_UI=$(curl -s --header "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/secret/data/prods | jq -r '.data.data.DASHBOARD_UI')
+          echo "The secret value is $DASHBOARD_UI"
           echo "DASHBOARD_UI=${DASHBOARD_UI}" > .env
            
       - uses: actions/upload-artifact@v3
