@@ -1,3 +1,4 @@
+
 name: Retrieve Vault Secret
 
 on:
@@ -20,10 +21,10 @@ jobs:
                --request GET \
                https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods)
           data=$(echo "$response" | jq -r '.data.data.DASHBOARD_UI')     
-          echo "::set-output name=response::$data"
+          echo "$data" >> $GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: SecretsVariables
-          path: ${{ steps.curl-request.outputs.response }}
+          path: ${{ env.data }}
