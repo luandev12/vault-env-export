@@ -20,6 +20,7 @@ jobs:
           url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
 
       - name: Retrieve Secret
+        id: import-secrets
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
           vault kv get -field=DASHBOARD_UI secret/prods > .env
