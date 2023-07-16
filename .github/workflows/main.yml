@@ -23,11 +23,9 @@ jobs:
         id: import-secrets
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          vault kv get -field=DASHBOARD_UI secret/prods > .env
-          echo "::set-output name=dashboard_ui::$DASHBOARD_UI"
-          
+          vault kv get -field=DASHBOARD_UI secret/prods > .env.tmp
+          echo "DASHBOARD_UI=$(cat .env.tmp)" > .env
+
       - name: Display .env File
         run: |
-          touch .env
-          echo "DASHBOARD_UI=${{ steps.import-secrets.outputs.value }}" >> .env
           cat .env
