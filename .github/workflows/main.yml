@@ -18,7 +18,7 @@ jobs:
         run: |
           response=$(curl -sSL --header "X-Vault-Token: hvs.BBSpQxhFT5NSQWwRkectS5KB" \
                --request GET \
-               https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods | jq -r '.data.data.DASHBOARD_UI')
+               https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods | jq -r '.data')
           echo "data=$response" >> $GITHUB_ENV
 
       - name: Upload Artifact
