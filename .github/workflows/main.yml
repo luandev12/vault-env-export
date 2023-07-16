@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SecretsVariables
-          path: ${{ env.data }}
+          path: $GITHUB_ENV
