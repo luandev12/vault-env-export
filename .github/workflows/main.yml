@@ -16,8 +16,8 @@ jobs:
       - name: Set up Vault CLI
         uses: hashicorp/vault-action@v2
         with:
-          vault-token: ${{ secrets.VAULT_TOKEN }}
-          vault-url: ${{ secrets.VAULT_URL }}
+          token: ${{ secrets.VAULT_TOKEN }}
+          url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
 
       - name: Retrieve Secret
         run: |
