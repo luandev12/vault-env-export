@@ -13,27 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Vault CLI
-        id: import-secrets
-        uses: hashicorp/vault-action@v2
-        with:
-          token: ${{ secrets.VAULT_TOKEN }}
-          url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
-          secrets: |
-           DASHBOARD_UI=secret/data/prods/DASHBOARD_UI
-           
-      - name: Retrieve Secret
+      - name: Perform cURL request
         run: |
-          DASHBOARD_UI = "${{ steps.import-secrets.outputs.DASHBOARD_UI }}"
-
-      - name: Step following Import Secrets
-        run: |
-          touch secrets.json
-          echo "${{ toJson(steps.import-secrets.outputs) }}" >> secrets.json
-                
+          response=$(curl -sSL --header "X-Vault-Token: hvs.BBSpQxhFT5NSQWwRkectS5KB" \
+               --request GET \
+               https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods)
+          formatted_response=$(echo "$response" | jq -r '.data.data.DASHBOARD_UI')
+          echo "Formatted Response: $formatted_response"
+          
       - uses: actions/upload-artifact@v3
         name: Upload Artifact
         with:
          name: SecretsVariables
-         path: "secrets.json"
+         path: "$formatted_response"
  
