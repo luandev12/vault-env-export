@@ -31,7 +31,7 @@ jobs:
 
       - name: Display Secret Value
         run: |
-          echo "The secret value is $abc"
+          echo "The secret value is ${{ env.abc }}"
           
       - uses: actions/upload-artifact@v3
         name: Upload Artifact
