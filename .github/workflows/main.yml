@@ -18,12 +18,10 @@ jobs:
           response=$(curl -sSL --header "X-Vault-Token: hvs.BBSpQxhFT5NSQWwRkectS5KB" \
                --request GET \
                https://d1e5-2a09-bac5-d41b-16d2-00-246-a1.ngrok-free.app/v1/secret/data/prods)
-          formatted_response=$(echo "$response" | jq -r '.data.data.DASHBOARD_UI')
-          echo "Formatted Response: $formatted_response"
-          
+          echo "::set-env name=formatted_response::$response"
+
       - uses: actions/upload-artifact@v3
         name: Upload Artifact
         with:
-         name: SecretsVariables
-         path: "$formatted_response"
- 
+          name: SecretsVariables
+          path: ${{ env.formatted_response }}
