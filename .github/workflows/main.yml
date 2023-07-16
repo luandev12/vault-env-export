@@ -23,13 +23,16 @@ jobs:
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
           export VAULT_TOKEN=$VAULT_TOKEN
-          export DASHBOARD_UI=$(curl -s --header "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/secret/data/prods | jq -r '.data.data.DASHBOARD_UI')
-          echo "The secret value is $DASHBOARD_UI"
-          echo "DASHBOARD_UI=${DASHBOARD_UI}" > .env
-           
+          abc=$(vault kv get -field=DASHBOARD_UI -format=json secret/prods | jq -r '.data.DASHBOARD_UI')
+          echo "abc=$abc" >> $GITHUB_ENV
+
+      - name: Display Secret Value
+        run: |
+          echo "The secret value is $abc"
+          
       - uses: actions/upload-artifact@v3
         name: Upload Artifact
         with:
          name: SecretsVariables
-         path: ".env"
+         path: "$abc"
  
