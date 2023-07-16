@@ -14,14 +14,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Vault CLI
-        uses: hashicorp/vault-action@v1
+        uses: hashicorp/vault-action@v2
         with:
           vault-token: ${{ secrets.VAULT_TOKEN }}
           vault-url: ${{ secrets.VAULT_URL }}
 
       - name: Authenticate with Vault
         id: login
-        uses: hashicorp/vault-login@v1
+        uses: hashicorp/vault-action@v2
         with:
           method: token
           token: ${{ secrets.VAULT_TOKEN }}
