@@ -22,6 +22,6 @@ jobs:
       - name: Retrieve Secret
         run: |
           export VAULT_ADDR=${{ secrets.VAULT_URL }}
-          export DASHBOARD_UI=$(vault kv get -field=DASHBOARD_UI secret/prods)
-          echo "DASHBOARD_UI=${DASHBOARD_UI}" > .env
-          echo "The secret value is ${DASHBOARD_UI}"
+          DASHBOARD_UI=$(vault kv get -field=DASHBOARD_UI -format=json secret/prods | jq -r '.data.DASHBOARD_UI')
+          echo "::set-env name=DASHBOARD_UI::${DASHBOARD_UI}"
+          echo "The secret value is $DASHBOARD_UI"
