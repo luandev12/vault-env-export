@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Vault CLI
-        uses: hashicorp/setup-vault@v2
+        uses: hashicorp/vault-action@v2
         with:
           vault-token: hvs.pZGVD0LmRE1EWw8HPGFAhrYa
           vault-url: https://1883-2a09-bac5-d46f-16c8-00-245-13.ngrok-free.app
