@@ -1,5 +1,7 @@
 on: [push, workflow_dispatch]
 jobs:
-    steps:
-      - name: Say Hello World
-        run: echo Hello, world!
+    build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Say Hello World
+            run: echo Hello, world!
